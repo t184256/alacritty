@@ -1868,6 +1868,8 @@ impl<T: EventListener> Handler for Term<T> {
             Attr::CancelBoldDim => cursor.template.flags.remove(Flags::BOLD | Flags::DIM),
             Attr::Italic => cursor.template.flags.insert(Flags::ITALIC),
             Attr::CancelItalic => cursor.template.flags.remove(Flags::ITALIC),
+            Attr::Alt => cursor.template.flags.insert(Flags::ALT),
+            Attr::CancelAlt => cursor.template.flags.remove(Flags::ALT),
             Attr::Underline => {
                 cursor.template.flags.remove(Flags::ALL_UNDERLINES);
                 cursor.template.flags.insert(Flags::UNDERLINE);
