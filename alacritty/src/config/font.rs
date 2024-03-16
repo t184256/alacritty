@@ -37,6 +37,12 @@ pub struct Font {
     /// Bold italic font face.
     bold_italic: SecondaryFontDescription,
 
+    /// Alternative font face.
+    alt: SecondaryFontDescription,
+
+    /// Alternative font face.
+    alt_italic: SecondaryFontDescription,
+
     /// Font size in points.
     size: Size,
 
@@ -74,6 +80,16 @@ impl Font {
     pub fn bold_italic(&self) -> FontDescription {
         self.bold_italic.desc(&self.normal)
     }
+
+    /// Get alternative font description.
+    pub fn alt(&self) -> FontDescription {
+        self.alt.desc(&self.normal)
+    }
+
+    /// Get alternative italic font description.
+    pub fn alt_italic(&self) -> FontDescription {
+        self.alt_italic.desc(&self.normal)
+    }
 }
 
 impl Default for Font {
@@ -82,6 +98,8 @@ impl Default for Font {
             builtin_box_drawing: true,
             glyph_offset: Default::default(),
             use_thin_strokes: Default::default(),
+            alt_italic: Default::default(),
+            alt: Default::default(),
             bold_italic: Default::default(),
             italic: Default::default(),
             offset: Default::default(),

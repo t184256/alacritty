@@ -1838,8 +1838,7 @@ checksum = "673aac59facbab8a9007c7f6108d11f63b603f7cabff99fabf650fea5c32b861"
 [[package]]
 name = "utf8parse"
 version = "0.2.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "711b9620af191e0cdc7468a8d14e709c3dcdb115b36f838e601583af800a370a"
+source = "git+https://github.com/t184256/vte.git#ae365e668c7797cb9a486be7c1f981953cd4e5ac"
 
 [[package]]
 name = "version_check"
@@ -1870,8 +1869,7 @@ dependencies = [
 [[package]]
 name = "vte"
 version = "0.13.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "40eb22ae96f050e0c0d6f7ce43feeae26c348fc4dea56928ca81537cfaa6188b"
+source = "git+https://github.com/t184256/vte.git#ae365e668c7797cb9a486be7c1f981953cd4e5ac"
 dependencies = [
  "bitflags 2.4.2",
  "cursor-icon",
@@ -1884,8 +1882,7 @@ dependencies = [
 [[package]]
 name = "vte_generate_state_changes"
 version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d257817081c7dffcdbab24b9e62d2def62e2ff7d00b1c20062551e6cccc145ff"
+source = "git+https://github.com/t184256/vte.git#ae365e668c7797cb9a486be7c1f981953cd4e5ac"
 dependencies = [
  "proc-macro2",
  "quote",
