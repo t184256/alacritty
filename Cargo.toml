@@ -11,3 +11,7 @@ resolver = "2"
 lto = "thin"
 debug = 1
 incremental = false
+
+[patch.crates-io]
+vte = { git = "https://github.com/t184256/vte.git" }  # Alt / CancelAlt
+utf8parse = { git = "https://github.com/t184256/vte.git" }  # sigh
