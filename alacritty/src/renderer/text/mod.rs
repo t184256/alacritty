@@ -139,10 +139,12 @@ pub trait TextRenderApi<T: TextRenderBatch>: LoadGlyph {
         size_info: &SizeInfo,
     ) {
         // Get font key for cell.
-        let font_key = match cell.flags & Flags::BOLD_ITALIC {
+        let font_key = match cell.flags & (Flags::BOLD_ITALIC | Flags::ALT) {
             Flags::BOLD_ITALIC => glyph_cache.bold_italic_key,
             Flags::ITALIC => glyph_cache.italic_key,
             Flags::BOLD => glyph_cache.bold_key,
+            Flags::ALT => glyph_cache.alt_key,
+            Flags::ALT_ITALIC => glyph_cache.alt_italic_key,
             _ => glyph_cache.font_key,
         };
 

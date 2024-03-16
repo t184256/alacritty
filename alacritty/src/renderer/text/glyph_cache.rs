@@ -62,6 +62,12 @@ pub struct GlyphCache {
     /// Bold italic font.
     pub bold_italic_key: FontKey,
 
+    /// Alternative font.
+    pub alt_key: FontKey,
+
+    /// Alternative italic font.
+    pub alt_italic_key: FontKey,
+
     /// Font size.
     pub font_size: crossfont::Size,
 
@@ -80,7 +86,7 @@ pub struct GlyphCache {
 
 impl GlyphCache {
     pub fn new(mut rasterizer: Rasterizer, font: &Font) -> Result<GlyphCache, crossfont::Error> {
-        let (regular, bold, italic, bold_italic) = Self::compute_font_keys(font, &mut rasterizer)?;
+        let (regular, bold, italic, bold_italic, alt, alt_italic) = Self::compute_font_keys(font, &mut rasterizer)?;
 
         // Need to load at least one glyph for the face before calling metrics.
         // The glyph requested here ('m' at the time of writing) has no special
@@ -97,6 +103,8 @@ impl GlyphCache {
             bold_key: bold,
             italic_key: italic,
             bold_italic_key: bold_italic,
+            alt_key: alt,
+            alt_italic_key: alt_italic,
             font_offset: font.offset,
             glyph_offset: font.glyph_offset,
             metrics,
@@ -113,11 +121,11 @@ impl GlyphCache {
         }
     }
 
-    /// Computes font keys for (Regular, Bold, Italic, Bold Italic).
+    /// Computes font keys for (Regular, Bold, Italic, Bold Italic, Alt, Alt Italic).
     fn compute_font_keys(
         font: &Font,
         rasterizer: &mut Rasterizer,
-    ) -> Result<(FontKey, FontKey, FontKey, FontKey), crossfont::Error> {
+    ) -> Result<(FontKey, FontKey, FontKey, FontKey, FontKey, FontKey), crossfont::Error> {
         let size = font.size();
 
         // Load regular font.
@@ -149,7 +157,17 @@ impl GlyphCache {
 
         let bold_italic = load_or_regular(bold_italic_desc);
 
-        Ok((regular, bold, italic, bold_italic))
+        // Load alternative font.
+        let alt_desc = Self::make_desc(&font.alt(), Slant::Normal, Weight::Normal);
+
+        let alt = load_or_regular(alt_desc);
+
+        // Load alternative italic font.
+        let alt_italic_desc = Self::make_desc(&font.alt_italic(), Slant::Italic, Weight::Normal);
+
+        let alt_italic = load_or_regular(alt_italic_desc);
+
+        Ok((regular, bold, italic, bold_italic, alt, alt_italic))
     }
 
     fn load_regular_font(
@@ -276,7 +294,7 @@ impl GlyphCache {
         self.glyph_offset = font.glyph_offset;
 
         // Recompute font keys.
-        let (regular, bold, italic, bold_italic) =
+        let (regular, bold, italic, bold_italic, alt, alt_italic) =
             Self::compute_font_keys(font, &mut self.rasterizer)?;
 
         self.rasterizer.get_glyph(GlyphKey {
@@ -293,6 +311,8 @@ impl GlyphCache {
         self.bold_key = bold;
         self.italic_key = italic;
         self.bold_italic_key = bold_italic;
+        self.alt_key = alt;
+        self.alt_italic_key = alt_italic;
         self.metrics = metrics;
         self.builtin_box_drawing = font.builtin_box_drawing;
 
@@ -309,5 +329,7 @@ impl GlyphCache {
         self.load_glyphs_for_font(self.bold_key, loader);
         self.load_glyphs_for_font(self.italic_key, loader);
         self.load_glyphs_for_font(self.bold_italic_key, loader);
+        self.load_glyphs_for_font(self.alt_key, loader);
+        self.load_glyphs_for_font(self.alt_italic_key, loader);
     }
 }
