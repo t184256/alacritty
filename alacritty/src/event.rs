@@ -1821,8 +1821,7 @@ impl input::Processor<EventProxy, ActionContext<'_, Notifier, EventProxy>> {
                         self.ctx.update_cursor_blinking();
                         self.on_focus_change(is_focused);
                     },
-                    WindowEvent::Occluded(occluded) => {
-                        *self.ctx.occluded = occluded;
+                    WindowEvent::Occluded(_) => {
                     },
                     WindowEvent::DroppedFile(path) => {
                         let path: String = path.to_string_lossy().into();
